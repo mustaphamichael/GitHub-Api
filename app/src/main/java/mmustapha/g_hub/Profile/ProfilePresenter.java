@@ -48,7 +48,6 @@ public class ProfilePresenter implements ProfileContract.Presenter {
                     d.setFollowers(followers);
                     d.setFollowing(following);
                     mView.showProfile(d);
-                    Log.e("MIKE'S TAG", fullname);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

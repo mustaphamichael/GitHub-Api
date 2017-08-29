@@ -13,6 +13,7 @@ public class ProfileContract {
     interface View extends BaseView<Presenter>{
         Context getContext();
         void showProfile(DevProfile profile);
+        void onShareBtnPress();
     }
 
     interface Presenter{

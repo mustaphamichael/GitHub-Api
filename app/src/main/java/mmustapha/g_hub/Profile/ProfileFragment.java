@@ -1,14 +1,15 @@
 package mmustapha.g_hub.Profile;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -34,8 +35,10 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
 
     private ProfileContract.Presenter mPresenter;
     private RoundedCornerImage mProfileImage;
-    private TextView mFullName, mLocation, mUserName, mProfileURL, mRepos, mFollwers, mFollowing;
+    private TextView mFullName, mLocation, mUserName, mProfileURL, mRepos, mFollowers, mFollowing;
+    String mFullNameStr, mProfileURLStr; // Dev's FullName And ProfileURL in String
     private ProfileFragmentListener mListener;
+
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -59,7 +62,7 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
         setHasOptionsMenu(true); // Enables Options Menu to be displayed on the Toolbar
         // initialize Presenter
         mPresenter = new ProfilePresenter(this);
-        this.setPresenter(mPresenter);
+        setPresenter(mPresenter);
     }
 
     @Override
@@ -75,7 +78,7 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
         mUserName = view.findViewById(R.id.username);
         mProfileURL = view.findViewById(R.id.profileURL);
         mRepos = view.findViewById(R.id.repo);
-        mFollwers = view.findViewById(R.id.followers);
+        mFollowers = view.findViewById(R.id.followers);
         mFollowing = view.findViewById(R.id.following);
         return view;
     }
@@ -98,8 +101,7 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_share)
-            Toast.makeText(getContext(), "OK", Toast.LENGTH_SHORT).show();
+        if (id == R.id.action_share) onShareBtnPress(); // Java 8
         return super.onOptionsItemSelected(item);
     }
 
@@ -108,6 +110,10 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
         mPresenter = presenter;
     }
 
+    /**
+     * Display Developer's Details on the Screen
+     * @param profile
+     */
     @Override
     public void showProfile(DevProfile profile) {
         mFullName.setText(profile.getFullName());
@@ -115,7 +121,7 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
         mUserName.setText(profile.getUserName());
         mProfileURL.setText(profile.getProfileURL());
         mRepos.setText(profile.getRepo());
-        mFollwers.setText(profile.getFollowers());
+        mFollowers.setText(profile.getFollowers());
         mFollowing.setText(profile.getFollowing());
         // Load Developer's Image using Glide library
         RequestOptions options = new RequestOptions();
@@ -124,8 +130,25 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
                 .setDefaultRequestOptions(options)
                 .load(profile.getImageURL())
                 .into(mProfileImage);
-
+        mFullNameStr = profile.getFullName();
+        mProfileURLStr = profile.getProfileURL();
     }
+
+    /**
+     * Enable Android Share Intent
+     */
+    @Override
+    public void onShareBtnPress() {
+        final String shareMessage = getResources().getString(R.string.share_message, mFullNameStr, mProfileURLStr);
+            final String shareChooserHeader = getResources().getString(R.string.share_chooser_header);
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_SEND);
+                intent.putExtra(Intent.EXTRA_TEXT, shareMessage);
+                intent.setType("text/plain"); // Message as a plain text
+                if (intent.resolveActivity(getActivity().getPackageManager()) != null){
+                    startActivity(Intent.createChooser(intent, shareChooserHeader));
+                }
+            }
 
     // Listener to get Developer's Name from Parent Activity
     public interface ProfileFragmentListener{

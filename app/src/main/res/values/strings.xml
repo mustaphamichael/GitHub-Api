@@ -5,4 +5,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_profile">Profile</string>
     <string name="action_share">Share</string>
+
+    <string name="share_message">Check out this awesome developer @%1$s, %2$s .</string>
+    <string name="share_chooser_header">Share Developer\'s Info</string>
+
 </resources>

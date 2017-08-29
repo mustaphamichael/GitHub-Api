@@ -102,8 +102,9 @@ public class DevListAdapter extends RecyclerView.Adapter<DevListAdapter.DevListV
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mFragment.getContext(), userName, Toast.LENGTH_SHORT).show();
-                mFragment.getContext().startActivity(new Intent(mFragment.getActivity(), ProfileActivity.class));
+                Intent intent = new Intent(mFragment.getActivity(), ProfileActivity.class);
+                intent.putExtra("DEVELOPER_NAME", userName);
+                mFragment.getContext().startActivity(intent);
             }
         });
     }

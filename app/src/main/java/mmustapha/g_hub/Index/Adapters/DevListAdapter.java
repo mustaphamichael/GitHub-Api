@@ -1,6 +1,7 @@
 package mmustapha.g_hub.Index.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import com.bumptech.glide.request.RequestOptions;
 
 import java.util.List;
 
+import mmustapha.g_hub.Profile.ProfileActivity;
 import mmustapha.g_hub.R;
 
 /**
@@ -101,6 +103,7 @@ public class DevListAdapter extends RecyclerView.Adapter<DevListAdapter.DevListV
             @Override
             public void onClick(View v) {
                 Toast.makeText(mFragment.getContext(), userName, Toast.LENGTH_SHORT).show();
+                mFragment.getContext().startActivity(new Intent(mFragment.getActivity(), ProfileActivity.class));
             }
         });
     }

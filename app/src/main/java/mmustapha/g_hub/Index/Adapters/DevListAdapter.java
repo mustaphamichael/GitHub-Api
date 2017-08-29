@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 import java.util.List;
 
-import mmustapha.g_hub.Index.IndexFragment;
 import mmustapha.g_hub.R;
 
 /**
@@ -26,7 +25,6 @@ public class DevListAdapter extends RecyclerView.Adapter<DevListAdapter.DevListV
     private Context mCtx;
     private Fragment mFragment;
     private List<Developer> mDeveloper;
-//    private IndexFragment.IndexListener mListener;
     boolean mIsFav;
 
 
@@ -36,9 +34,9 @@ public class DevListAdapter extends RecyclerView.Adapter<DevListAdapter.DevListV
         CheckBox isFavorite;
         public DevListViewHolder(View view) {
             super(view);
-            username = (TextView)view.findViewById(R.id.userName);
-            profileImage = (ImageView) view.findViewById(R.id.profileImage);
-            isFavorite = (CheckBox) view.findViewById(R.id.isFav);
+            username = view.findViewById(R.id.userName);
+            profileImage = view.findViewById(R.id.profileImage);
+            isFavorite = view.findViewById(R.id.isFav);
         }
     }
 
@@ -99,11 +97,7 @@ public class DevListAdapter extends RecyclerView.Adapter<DevListAdapter.DevListV
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mCtx = mFragment.getContext();
-//                if (mCtx instanceof IndexFragment.IndexListener){
-//                    mListener = (IndexFragment.IndexListener)mCtx;
-//                }
-//                mListener.createInteraction(userName, mIsFav);
+                Toast.makeText(mFragment.getContext(), userName, Toast.LENGTH_SHORT).show();
             }
         });
     }

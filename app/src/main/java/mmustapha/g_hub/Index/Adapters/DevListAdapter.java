@@ -12,6 +12,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+
 import java.util.List;
 
 import mmustapha.g_hub.R;
@@ -65,12 +68,12 @@ public class DevListAdapter extends RecyclerView.Adapter<DevListAdapter.DevListV
         holder.username.setText(Developer.getUserName());
 
         // Load Developer's Image using Glide library
-//        RequestOptions options = new RequestOptions();
-//        options.placeholder(R.drawable.git_no_data);
-//        Glide.with(mFragment)
-//                .setDefaultRequestOptions(options)
-//                .load(url)
-//                .into(holder.profileImage);
+        RequestOptions options = new RequestOptions();
+        options.placeholder(R.drawable.git_no_data);
+        Glide.with(mFragment)
+                .setDefaultRequestOptions(options)
+                .load(url)
+                .into(holder.profileImage);
 
         // Add Developer to Favourites Group
         // TODO: Create a SQLite DB instance to store Favourites List

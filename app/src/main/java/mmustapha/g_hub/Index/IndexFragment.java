@@ -2,6 +2,7 @@ package mmustapha.g_hub.Index;
 
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import mmustapha.g_hub.Index.Adapters.DevListAdapter;
 import mmustapha.g_hub.Index.Adapters.Developer;
@@ -22,11 +22,13 @@ import mmustapha.g_hub.R;
  * Use the {@link IndexFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class IndexFragment extends Fragment {
+public class IndexFragment extends Fragment implements IndexContract.View {
 
     private RecyclerView mRecyclerView;
     private DevListAdapter mDevAdapter;
     private ArrayList<Developer> mDevelopers;
+    private IndexContract.Presenter mPresenter;
+//    private
 
     public IndexFragment() {
         // Required empty public constructor
@@ -47,6 +49,9 @@ public class IndexFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
         }
+        // Initialize the Presenter
+        mPresenter = new IndexPresenter(this);
+        this.setPresenter(mPresenter);
     }
 
     @Override
@@ -56,12 +61,6 @@ public class IndexFragment extends Fragment {
         mRecyclerView = view.findViewById(R.id.dev_recyclerview);
         mDevelopers = new ArrayList();
         mDevAdapter = new DevListAdapter(this, mDevelopers);
-
-        // DEMO DATA
-        Developer dev1 = new Developer("Mike", "", false);
-        mDevelopers.add(dev1);
-        Developer dev2 = new Developer("Mustapha", "", false);
-        mDevelopers.add(dev2);
         createRecyclerView(mDevAdapter);
         return view;
     }
@@ -90,4 +89,26 @@ public class IndexFragment extends Fragment {
         });
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mPresenter.getDeveloperList();
+    }
+
+    @Override
+    public void setPresenter(IndexContract.Presenter presenter) {
+        mPresenter = presenter;
+    }
+
+    @Override
+    public void onSuccess(Developer dev) {
+        mDevelopers.add(dev);
+        if (mDevAdapter != null)
+        mDevAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onFailure() {
+
+    }
 }

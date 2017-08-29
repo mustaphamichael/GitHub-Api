@@ -11,10 +11,8 @@ public class Developer implements Parcelable {
     private String mUserName, mImageURL;
     private boolean mIsFavourite;
 
-    public Developer( String userName, String imageURL, boolean isFavourite){
-        mUserName = userName;
-        mImageURL = imageURL;
-        mIsFavourite = isFavourite;
+    public Developer(){
+        // Constructor
     }
 
     protected Developer(Parcel in) {

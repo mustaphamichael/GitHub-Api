@@ -61,10 +61,9 @@ public class IndexFragment extends Fragment implements IndexContract.View {
         View view = inflater.inflate(R.layout.fragment_index, container, false);
         mRecyclerView = view.findViewById(R.id.dev_recyclerview);
         mProgressBar = view.findViewById(R.id.progressbar);
-//        mPresenter.getDeveloperList(); // Get Developers List View
-        mDevelopers = new ArrayList();
-        mDevAdapter = new DevListAdapter(this, mDevelopers);
-        createRecyclerView(mDevAdapter);
+//        mDevelopers = new ArrayList();
+//        mDevAdapter = new DevListAdapter(this, mDevelopers);
+//        createRecyclerView(mDevAdapter);
         return view;
     }
 
@@ -93,9 +92,24 @@ public class IndexFragment extends Fragment implements IndexContract.View {
     }
 
     @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList("DEVELOPER_ARRAY", mDevelopers); // Saving Developers ArrayList on the LifeCycle
+    }
+
+    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        if(savedInstanceState ==  null){
+            mDevelopers = new ArrayList<>();
             mPresenter.getDeveloperList();
+        }else{
+            mDevelopers = savedInstanceState.getParcelableArrayList("DEVELOPER_ARRAY");
+            mProgressBar.setVisibility(View.GONE);
+        }
+        mDevAdapter = new DevListAdapter(this, mDevelopers);
+        // Create Recycler View
+        createRecyclerView(mDevAdapter);
     }
 
     @Override
@@ -103,6 +117,10 @@ public class IndexFragment extends Fragment implements IndexContract.View {
         mPresenter = presenter;
     }
 
+    /**
+     * Display list of developers on Screen if Data is available
+     * @param dev
+     */
     @Override
     public void onSuccess(Developer dev) {
         mDevelopers.add(dev);

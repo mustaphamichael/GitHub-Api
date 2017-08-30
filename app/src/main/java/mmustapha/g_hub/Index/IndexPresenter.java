@@ -80,7 +80,7 @@ public class IndexPresenter implements IndexContract.Presenter {
                 internetHandle.cancel(true);
             }
             else {
-                mView.toastMessage("Check Internet Connectivity");
+                mView.toastMessage("");
                 internetHandle.cancel(false);
             }
     }

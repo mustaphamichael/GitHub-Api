@@ -15,6 +15,7 @@ public class IndexContract {
         Context getContext();
         void onSuccess(Developer dev);
         void onFailure();
+        void toastMessage(String message);
     }
 
     interface Presenter{

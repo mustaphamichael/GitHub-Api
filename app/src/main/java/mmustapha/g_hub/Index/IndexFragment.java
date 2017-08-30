@@ -3,26 +3,26 @@ package mmustapha.g_hub.Index;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import mmustapha.g_hub.Index.Adapters.DevListAdapter;
 import mmustapha.g_hub.Index.Adapters.Developer;
 import mmustapha.g_hub.R;
+import mmustapha.g_hub.Utils.IPListener;
+import mmustapha.g_hub.Utils.InternetCheck;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link IndexFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class IndexFragment extends Fragment implements IndexContract.View {
 
     private RecyclerView mRecyclerView;
@@ -61,6 +61,7 @@ public class IndexFragment extends Fragment implements IndexContract.View {
         View view = inflater.inflate(R.layout.fragment_index, container, false);
         mRecyclerView = view.findViewById(R.id.dev_recyclerview);
         mProgressBar = view.findViewById(R.id.progressbar);
+//        mPresenter.getDeveloperList(); // Get Developers List View
         mDevelopers = new ArrayList();
         mDevAdapter = new DevListAdapter(this, mDevelopers);
         createRecyclerView(mDevAdapter);
@@ -94,7 +95,7 @@ public class IndexFragment extends Fragment implements IndexContract.View {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mPresenter.getDeveloperList();
+            mPresenter.getDeveloperList();
     }
 
     @Override
@@ -113,5 +114,10 @@ public class IndexFragment extends Fragment implements IndexContract.View {
     @Override
     public void onFailure() {
 
+    }
+
+    @Override
+    public void toastMessage(String message) {
+        Toast.makeText(getActivity().getApplicationContext(), message, Toast.LENGTH_LONG).show();
     }
 }

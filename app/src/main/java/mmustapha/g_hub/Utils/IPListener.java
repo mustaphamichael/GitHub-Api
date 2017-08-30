@@ -5,4 +5,6 @@ package mmustapha.g_hub.Utils;
  */
 
 public interface IPListener {
+    void getResponse(boolean response);
+
 }

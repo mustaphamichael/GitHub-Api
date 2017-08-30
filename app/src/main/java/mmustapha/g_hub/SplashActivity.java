@@ -19,6 +19,6 @@ public class SplashActivity extends Activity {
                 startActivity(new Intent(getApplicationContext(), IndexActivity.class));
             }
         };
-        new Handler().postDelayed(r, 2500);
+        new Handler().postDelayed(r, 1500);
     }
 }

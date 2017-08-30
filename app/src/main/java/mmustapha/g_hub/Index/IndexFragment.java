@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 
@@ -28,7 +29,7 @@ public class IndexFragment extends Fragment implements IndexContract.View {
     private DevListAdapter mDevAdapter;
     private ArrayList<Developer> mDevelopers;
     private IndexContract.Presenter mPresenter;
-//    private
+    private ProgressBar mProgressBar;
 
     public IndexFragment() {
         // Required empty public constructor
@@ -59,6 +60,7 @@ public class IndexFragment extends Fragment implements IndexContract.View {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_index, container, false);
         mRecyclerView = view.findViewById(R.id.dev_recyclerview);
+        mProgressBar = view.findViewById(R.id.progressbar);
         mDevelopers = new ArrayList();
         mDevAdapter = new DevListAdapter(this, mDevelopers);
         createRecyclerView(mDevAdapter);
@@ -105,6 +107,7 @@ public class IndexFragment extends Fragment implements IndexContract.View {
         mDevelopers.add(dev);
         if (mDevAdapter != null)
         mDevAdapter.notifyDataSetChanged();
+        mProgressBar.setVisibility(View.GONE);
     }
 
     @Override

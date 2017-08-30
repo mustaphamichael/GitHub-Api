@@ -11,14 +11,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay"
-        app:elevation="0dp">
+        app:elevation="0dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
 
     </android.support.design.widget.AppBarLayout>
 
@@ -29,7 +33,7 @@
         android:paddingBottom="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/appbar"
+        app:layout_constraintTop_toBottomOf="@+id/appbar"
         android:background="@color/colorPrimary">
 
         <mmustapha.g_hub.Utils.RoundedCornerImage
@@ -80,7 +84,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textColor="@color/label_color"
-            android:text="Username"/>
+            android:text="Username" />
 
         <TextView
             android:id="@+id/username"
@@ -90,7 +94,7 @@
             android:paddingTop="12dp"
             android:paddingBottom="12dp"
             android:textSize="16sp"
-            app:layout_constraintTop_toBottomOf="@+id/username_lbl" />
+            app:layout_constraintTop_toBottomOf="@+id/username_lbl"/>
         <View
             android:id="@+id/divider1"
             android:layout_width="0dp"
@@ -129,7 +133,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            app:layout_constraintTop_toBottomOf="@id/divider2">
+            app:layout_constraintTop_toBottomOf="@+id/divider2">
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -147,7 +151,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/repo_lbl"
                     android:text="000"
-                    android:textStyle="bold"
+                    android:textSize="16sp"
                     android:gravity="center"/>
             </RelativeLayout>
             <RelativeLayout
@@ -166,8 +170,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/followers_lbl"
+                    android:textSize="16sp"
                     android:text="000"
-                    android:textStyle="bold"
                     android:gravity="center"/>
             </RelativeLayout>
             <RelativeLayout
@@ -186,8 +190,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/following_lbl"
+                    android:textSize="16sp"
                     android:text="000"
-                    android:textStyle="bold"
                     android:gravity="center"/>
             </RelativeLayout>
         </LinearLayout>

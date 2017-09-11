@@ -61,9 +61,6 @@ public class IndexFragment extends Fragment implements IndexContract.View {
         View view = inflater.inflate(R.layout.fragment_index, container, false);
         mRecyclerView = view.findViewById(R.id.dev_recyclerview);
         mProgressBar = view.findViewById(R.id.progressbar);
-//        mDevelopers = new ArrayList();
-//        mDevAdapter = new DevListAdapter(this, mDevelopers);
-//        createRecyclerView(mDevAdapter);
         return view;
     }
 
@@ -135,7 +132,7 @@ public class IndexFragment extends Fragment implements IndexContract.View {
     }
 
     @Override
-    public void toastMessage(String message) {
-        Toast.makeText(getActivity().getApplicationContext(), message, Toast.LENGTH_LONG).show();
+    public void showToastMessage(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 }

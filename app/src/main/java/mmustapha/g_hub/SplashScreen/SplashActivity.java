@@ -17,7 +17,9 @@ public class SplashActivity extends Activity {
         Runnable r = new Runnable() {
             @Override
             public void run() {
-                new CreateSQLiteDB(getApplicationContext()).execute();
+                if (getApplication()!= null){
+                    new CreateSQLiteDB(SplashActivity.this).execute();
+                }
             }
         };
         new Handler().postDelayed(r, 1500);

@@ -49,9 +49,9 @@ public class InternetCheck extends AsyncTask<Void, Void, Boolean>{
 
         // Scheduler for Internet Connectivity Check
         final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-        // Executes the run task in background with 0s delay at 10s interval
+        // Executes the run task in background with 0s delay at 30s interval
         final ScheduledFuture internetHandle =
-                scheduler.scheduleAtFixedRate(checkIt, 0, 15, SECONDS);
+                scheduler.scheduleAtFixedRate(checkIt, 0, 30, SECONDS);
         internetHandle.cancel(testConnection());
         return isConnected();
     }

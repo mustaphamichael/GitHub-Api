@@ -15,7 +15,7 @@ import mmustapha.g_hub.R;
 
 public class ProfileActivity extends AppCompatActivity implements ProfileFragment.ProfileFragmentListener{
 
-    String mDevName;
+    String mDevName, mImageURL;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,6 +24,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileFragmen
         // Check ./Index/Adapter/DevAdapter for Intent Source on line 106
         Intent intent = getIntent();
         mDevName = intent.getStringExtra("DEVELOPER_NAME");
+        mImageURL = intent.getStringExtra("IMAGE_URL");
     }
 
     /**
@@ -33,5 +34,10 @@ public class ProfileActivity extends AppCompatActivity implements ProfileFragmen
     @Override
     public String getDevName() {
         return mDevName;
+    }
+
+    @Override
+    public String getImageURL() {
+        return mImageURL;
     }
 }

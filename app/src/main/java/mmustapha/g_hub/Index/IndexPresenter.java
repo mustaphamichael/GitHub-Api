@@ -1,5 +1,7 @@
 package mmustapha.g_hub.Index;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -109,7 +111,6 @@ public class IndexPresenter implements IndexContract.Presenter {
                                 mView.onFailure("No Internet Connectivity");
                                 getServerResponse(mView.GET_LIST);
                                 break;
-                            case "STOP_GET":
 
                             default:
                                 // Do Nothing
@@ -119,11 +120,13 @@ public class IndexPresenter implements IndexContract.Presenter {
             });
             check.execute();
         }
+        Log.e("TASK: ", taskId);
     }
 
     @Override
     public void stopServerResponse() {
         check.cancel(true);
+        mView.hideSwipeRefreshLayout();
         System.out.println("CANCELLED!!!!!");
     }
 }

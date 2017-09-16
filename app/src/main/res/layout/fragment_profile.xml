@@ -1,222 +1,236 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
-    android:scrollbars="none"
+    android:id="@+id/swipeRefresh"
     tools:context="mmustapha.g_hub.Profile.ProfileFragment" >
 
-    <android.support.constraint.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <android.support.design.widget.AppBarLayout
-            android:id="@+id/appbar"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:theme="@style/AppTheme.AppBarOverlay"
-            app:elevation="0dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent">
-
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimary"
-                app:popupTheme="@style/AppTheme.PopupOverlay"
-                app:titleTextAppearance="@style/ToolbarStyle"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"/>
-
-        </android.support.design.widget.AppBarLayout>
-
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="none">
         <android.support.constraint.ConstraintLayout
-            android:id="@+id/header"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:paddingBottom="16dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/appbar"
-            android:background="@color/colorPrimary">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-            <mmustapha.g_hub.Utils.RoundedCornerImage
-                android:id="@+id/dev_image"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:src="@drawable/git_no_data"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
-
-            <TextView
-                android:id="@+id/dev_name"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:paddingTop="16dp"
-                android:textColor="@color/list_txtColor"
-                android:textStyle="bold"
-                android:textSize="16sp"
-                android:textAllCaps="true"
-                app:layout_constraintTop_toBottomOf="@+id/dev_image"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                android:text="Demo Demo"/>
-
-            <TextView
-                android:id="@+id/dev_location"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:textColor="@color/list_txtColor"
-                android:textSize="16sp"
-                app:layout_constraintTop_toBottomOf="@+id/dev_name"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                android:text="Lagos"/>
-        </android.support.constraint.ConstraintLayout>
-
-        <android.support.constraint.ConstraintLayout
-            android:layout_height="wrap_content"
-            android:layout_width="0dp"
-            android:padding="16dp"
-           app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/header">
-
-            <TextView
-                android:id="@+id/username_lbl"
+            <android.support.design.widget.AppBarLayout
+                android:id="@+id/appbar"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textColor="@color/label_color"
-                android:text="Username"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent" />
-
-            <TextView
-                android:id="@+id/username"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="demo"
-                android:paddingTop="12dp"
-                android:paddingBottom="12dp"
-                android:textSize="16sp"
-                app:layout_constraintTop_toBottomOf="@+id/username_lbl"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"/>
-            <View
-                android:id="@+id/divider1"
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:background="@color/list_txtColor"
-                app:layout_constraintTop_toBottomOf="@+id/username"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"/>
-
-            <TextView
-                android:id="@+id/profileURL_lbl"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:textColor="@color/label_color"
-                android:paddingTop="16dp"
-                app:layout_constraintTop_toBottomOf="@+id/divider1"
-                android:text="Profile URL"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"/>
-
-            <TextView
-                android:id="@+id/profileURL"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="demo@github.com"
-                android:autoLink="web"
-                android:clickable="true"
-                android:paddingTop="12dp"
-                android:paddingBottom="12dp"
-                android:textSize="16sp"
-                app:layout_constraintTop_toBottomOf="@+id/profileURL_lbl"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"/>
-
-            <View
-                android:id="@+id/divider2"
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:background="@color/list_txtColor"
-                app:layout_constraintTop_toBottomOf="@+id/profileURL"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"/>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                app:layout_constraintTop_toBottomOf="@+id/divider2"
+                android:theme="@style/AppTheme.AppBarOverlay"
+                app:elevation="0dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent">
-                <RelativeLayout
+
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="?attr/colorPrimary"
+                    app:popupTheme="@style/AppTheme.PopupOverlay"
+                    app:titleTextAppearance="@style/ToolbarStyle"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"/>
+
+            </android.support.design.widget.AppBarLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/header"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingBottom="16dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/appbar"
+                android:background="@color/colorPrimary">
+
+                <mmustapha.g_hub.Utils.RoundedCornerImage
+                    android:id="@+id/dev_image"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/git_no_data"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <TextView
+                    android:id="@+id/dev_name"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:paddingTop="16dp"
+                    android:textColor="@color/list_txtColor"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:textAllCaps="true"
+                    app:layout_constraintTop_toBottomOf="@+id/dev_image"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"/>
+
+                <TextView
+                    android:id="@+id/dev_location"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/list_txtColor"
+                    android:textSize="16sp"
+                    app:layout_constraintTop_toBottomOf="@+id/dev_name"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"/>
+            </android.support.constraint.ConstraintLayout>
+
+            <ProgressBar
+                android:id="@+id/progressbar"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/header" />
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/profile_body"
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:padding="16dp"
+                android:visibility="gone"
+               app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/header">
+
+                <TextView
+                    android:id="@+id/username_lbl"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1">
-                    <TextView
-                        android:id="@+id/repo_lbl"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/label_color"
-                        android:text="Repositories"
-                        android:gravity="center"/>
-                    <TextView
-                        android:id="@+id/repo"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/repo_lbl"
-                        android:text="000"
-                        android:textSize="16sp"
-                        android:gravity="center"/>
-                </RelativeLayout>
-                <RelativeLayout
+                    android:textColor="@color/label_color"
+                    android:text="Username"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent" />
+
+                <TextView
+                    android:id="@+id/username"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1">
-                    <TextView
-                        android:id="@+id/followers_lbl"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/label_color"
-                        android:text="Followers"
-                        android:gravity="center"/>
-                    <TextView
-                        android:id="@+id/followers"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/followers_lbl"
-                        android:textSize="16sp"
-                        android:text="000"
-                        android:gravity="center"/>
-                </RelativeLayout>
-                <RelativeLayout
+                    android:text="demo"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="12dp"
+                    android:textSize="16sp"
+                    app:layout_constraintTop_toBottomOf="@+id/username_lbl"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"/>
+                <View
+                    android:id="@+id/divider1"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:background="@color/list_txtColor"
+                    app:layout_constraintTop_toBottomOf="@+id/username"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"/>
+
+                <TextView
+                    android:id="@+id/profileURL_lbl"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1">
-                    <TextView
-                        android:id="@+id/following_lbl"
-                        android:layout_width="match_parent"
+                    android:textColor="@color/label_color"
+                    android:paddingTop="16dp"
+                    app:layout_constraintTop_toBottomOf="@+id/divider1"
+                    android:text="Profile URL"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"/>
+
+                <TextView
+                    android:id="@+id/profileURL"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="demo@github.com"
+                    android:autoLink="web"
+                    android:clickable="true"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="12dp"
+                    android:textSize="16sp"
+                    app:layout_constraintTop_toBottomOf="@+id/profileURL_lbl"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"/>
+
+                <View
+                    android:id="@+id/divider2"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:background="@color/list_txtColor"
+                    app:layout_constraintTop_toBottomOf="@+id/profileURL"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"/>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    app:layout_constraintTop_toBottomOf="@+id/divider2"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent">
+                    <RelativeLayout
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/label_color"
-                        android:text="Following"
-                        android:gravity="center"/>
-                    <TextView
-                        android:id="@+id/following"
-                        android:layout_width="match_parent"
+                        android:layout_weight="1">
+                        <TextView
+                            android:id="@+id/repo_lbl"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/label_color"
+                            android:text="Repositories"
+                            android:gravity="center"/>
+                        <TextView
+                            android:id="@+id/repo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/repo_lbl"
+                            android:text="000"
+                            android:textSize="16sp"
+                            android:gravity="center"/>
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/following_lbl"
-                        android:textSize="16sp"
-                        android:text="000"
-                        android:gravity="center"/>
-                </RelativeLayout>
-            </LinearLayout>
+                        android:layout_weight="1">
+                        <TextView
+                            android:id="@+id/followers_lbl"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/label_color"
+                            android:text="Followers"
+                            android:gravity="center"/>
+                        <TextView
+                            android:id="@+id/followers"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/followers_lbl"
+                            android:textSize="16sp"
+                            android:text="000"
+                            android:gravity="center"/>
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+                        <TextView
+                            android:id="@+id/following_lbl"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/label_color"
+                            android:text="Following"
+                            android:gravity="center"/>
+                        <TextView
+                            android:id="@+id/following"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/following_lbl"
+                            android:textSize="16sp"
+                            android:text="000"
+                            android:gravity="center"/>
+                    </RelativeLayout>
+                </LinearLayout>
+            </android.support.constraint.ConstraintLayout>
         </android.support.constraint.ConstraintLayout>
-    </android.support.constraint.ConstraintLayout>
-</ScrollView>
+    </ScrollView>
+</android.support.v4.widget.SwipeRefreshLayout>

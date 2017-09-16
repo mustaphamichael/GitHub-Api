@@ -66,7 +66,7 @@ public class DevListAdapter extends RecyclerView.Adapter<DevListAdapter.DevListV
     public void onBindViewHolder(final DevListViewHolder holder, int position) {
         final Developer Developer = mDeveloper.get(position);
         final String userName = Developer.getUserName(); // Retrieve Username from Developer
-        String url = Developer.getImageURL();    // Retrieve the ImageURL from Developer
+        final String url = Developer.getImageURL();    // Retrieve the ImageURL from Developer
         holder.username.setText(userName);
 
         // Load Developer's Image using Glide library
@@ -104,6 +104,7 @@ public class DevListAdapter extends RecyclerView.Adapter<DevListAdapter.DevListV
             public void onClick(View v) {
                 Intent intent = new Intent(mFragment.getActivity(), ProfileActivity.class);
                 intent.putExtra("DEVELOPER_NAME", userName);
+                intent.putExtra("IMAGE_URL", url);
                 mFragment.getContext().startActivity(intent);
             }
         });

@@ -15,7 +15,6 @@ public class IndexContract {
         Context getContext();
         void onSuccess(Developer dev);
         void onFailure(String errorMessage);
-        void showToastMessage(String message);
         void hideSwipeRefreshLayout();
     }
 

@@ -14,9 +14,13 @@ public class ProfileContract {
         Context getContext();
         void showProfile(DevProfile profile);
         void onShareBtnPress();
+        void onSuccess(DevProfile profile);
+        void onFailure(String errorMessage);
+        void hideSwipeRefreshLayout();
     }
 
     interface Presenter{
-        void getProfile(String username);
+        void getProfile(String taskId, String username);
+        void stopServerResponse();
     }
 }

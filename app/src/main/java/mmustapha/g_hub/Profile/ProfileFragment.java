@@ -4,8 +4,11 @@ package mmustapha.g_hub.Profile;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
@@ -16,42 +19,37 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
+import mmustapha.g_hub.Index.Adapters.Developer;
 import mmustapha.g_hub.Profile.Adapter.DevProfile;
 import mmustapha.g_hub.R;
 import mmustapha.g_hub.Utils.RoundedCornerImage;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link ProfileFragment#newInstance} factory method to
- * create an instance of this fragment.
  */
 public class ProfileFragment extends Fragment implements ProfileContract.View {
 
     private ProfileContract.Presenter mPresenter;
     private RoundedCornerImage mProfileImage;
     private TextView mFullName, mLocation, mUserName, mProfileURL, mRepos, mFollowers, mFollowing;
+    private ProgressBar mProgressBar;
     String mFullNameStr, mProfileURLStr; // Dev's FullName And ProfileURL in String
     private ProfileFragmentListener mListener;
+    private DevProfile mDeveloper;
+    private ConstraintLayout mConstraint;
+    private SwipeRefreshLayout mSwipeRefresh;
 
+    public final String GET_DEVELOPER_DETAILS = "GET_DEVELOPER_DETAILS";
 
     public ProfileFragment() {
         // Required empty public constructor
-    }
-
-    /**
-     * @return A new instance of fragment IndexFragment.
-     */
-    public static ProfileFragment newInstance() {
-        ProfileFragment fragment = new ProfileFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
@@ -72,6 +70,7 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
         Toolbar toolbar = view.findViewById(R.id.toolbar);
         AppCompatActivity activity = (AppCompatActivity)getActivity();
         activity.setSupportActionBar(toolbar);
+        mConstraint = view.findViewById(R.id.profile_body);
         mProfileImage = view.findViewById(R.id.dev_image);
         mFullName = view.findViewById(R.id.dev_name);
         mLocation = view.findViewById(R.id.dev_location);
@@ -80,7 +79,29 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
         mRepos = view.findViewById(R.id.repo);
         mFollowers = view.findViewById(R.id.followers);
         mFollowing = view.findViewById(R.id.following);
+        mProgressBar = view.findViewById(R.id.progressbar);
+        mSwipeRefresh = view.findViewById(R.id.swipeRefresh);
+        mSwipeRefresh.setColorSchemeResources(R.color.colorAccent,
+                R.color.colorPrimary, R.color.colorPrimaryDark);
         return view;
+    }
+
+    /**
+     * A SwipeRefreshLayout for getting updates on Developer's Profile
+     */
+    private void onSwipeRefresh(){
+        mSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mPresenter.getProfile(GET_DEVELOPER_DETAILS, mListener.getDevName());
+            }
+        });
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable("DEVELOPER", mDeveloper); // Save an instance of the Developer's Profile
     }
 
     @Override
@@ -89,7 +110,14 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
         if (getContext() instanceof ProfileFragment.ProfileFragmentListener){
             mListener = (ProfileFragment.ProfileFragmentListener)getContext();
         }
-        mPresenter.getProfile(mListener.getDevName());
+        if (savedInstanceState == null){
+            mPresenter.getProfile(GET_DEVELOPER_DETAILS, mListener.getDevName());
+        }
+        else{
+            mDeveloper = savedInstanceState.getParcelable("DEVELOPER");
+            onSuccess(mDeveloper);
+        }
+        onSwipeRefresh();
     }
 
     @Override
@@ -124,12 +152,14 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
         mFollowers.setText(profile.getFollowers());
         mFollowing.setText(profile.getFollowing());
         // Load Developer's Image using Glide library
-        RequestOptions options = new RequestOptions();
-        options.placeholder(R.drawable.git_no_data);
-        Glide.with(this)
-                .setDefaultRequestOptions(options)
-                .load(profile.getImageURL())
-                .into(mProfileImage);
+        if (getView() != null){
+            RequestOptions options = new RequestOptions();
+            options.placeholder(R.drawable.git_no_data);
+            Glide.with(this)
+                    .setDefaultRequestOptions(options)
+                    .load(mListener.getImageURL()) // Pass the intent value as Image URL
+                    .into(mProfileImage);
+        }
         mFullNameStr = profile.getFullName();
         mProfileURLStr = profile.getProfileURL();
     }
@@ -150,8 +180,38 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
                 }
             }
 
+    @Override
+    public void onSuccess(DevProfile profile) {
+        mDeveloper = profile;
+        showProfile(profile);
+        mProgressBar.setVisibility(View.GONE); // Hide Progress Bar
+        mConstraint.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onFailure(String errorMessage) {
+        if (getView() != null){
+            Snackbar.make(getView(), errorMessage, Snackbar.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void hideSwipeRefreshLayout() {
+        mSwipeRefresh.setRefreshing(false);
+    }
+
+    /**
+     * Force a new call to the server for every profile check
+     */
+    @Override
+    public void onPause() {
+        super.onPause();
+        mPresenter.stopServerResponse();
+    }
+
     // Listener to get Developer's Name from Parent Activity
     public interface ProfileFragmentListener{
         String getDevName();
+        String getImageURL();
     }
 }

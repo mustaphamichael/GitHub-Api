@@ -13,13 +13,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import mmustapha.g_hub.Index.Adapters.DevListAdapter;
 import mmustapha.g_hub.Index.Adapters.Developer;
 import mmustapha.g_hub.R;
+import mmustapha.g_hub.SplashScreen.CreateSQLiteDB;
 
 public class IndexFragment extends Fragment implements IndexContract.View {
 
@@ -81,7 +81,7 @@ public class IndexFragment extends Fragment implements IndexContract.View {
     }
 
     /**
-     * A SwipeRefreshLayout for getting updates on Developer's List
+     * A SwipeRefreshLayout for getting updates on Developers' List
      */
     private void onSwipeRefresh(){
         mSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -136,11 +136,6 @@ public class IndexFragment extends Fragment implements IndexContract.View {
         if (getView() != null){
             Snackbar.make(getView(), errorMessage, Snackbar.LENGTH_SHORT).show();
         }
-    }
-
-    @Override
-    public void showToastMessage(String message) {
-        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 
     @Override

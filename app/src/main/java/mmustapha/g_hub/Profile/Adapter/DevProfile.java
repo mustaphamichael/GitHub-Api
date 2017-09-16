@@ -1,12 +1,42 @@
 package mmustapha.g_hub.Profile.Adapter;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by mmustapha on 8/29/17.
  */
 
-public class DevProfile  {
+public class DevProfile implements Parcelable {
 
     private String mFullName, mLocation, mUserName, mProfileURL, mImageURL, mRepo, mFollowers, mFollowing;
+
+    public DevProfile() {
+
+    }
+
+    public DevProfile(Parcel in) {
+        mFullName = in.readString();
+        mLocation = in.readString();
+        mUserName = in.readString();
+        mProfileURL = in.readString();
+        mImageURL = in.readString();
+        mRepo = in.readString();
+        mFollowers = in.readString();
+        mFollowing = in.readString();
+    }
+
+    public static final Creator<DevProfile> CREATOR = new Creator<DevProfile>() {
+        @Override
+        public DevProfile createFromParcel(Parcel in) {
+            return new DevProfile(in);
+        }
+
+        @Override
+        public DevProfile[] newArray(int size) {
+            return new DevProfile[size];
+        }
+    };
 
 
     public void setFullName(String fullname) {
@@ -71,6 +101,23 @@ public class DevProfile  {
 
     public String getFollowing() {
         return mFollowing;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(mFullName);
+        parcel.writeString(mLocation);
+        parcel.writeString(mUserName);
+        parcel.writeString(mProfileURL);
+        parcel.writeString(mImageURL);
+        parcel.writeString(mRepo);
+        parcel.writeString(mFollowers);
+        parcel.writeString(mFollowing);
     }
 }
 

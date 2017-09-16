@@ -30,7 +30,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Index.IndexActivity" />
         </activity>
-        <activity android:name=".SplashActivity"
+        <activity android:name=".SplashScreen.SplashActivity"
             android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

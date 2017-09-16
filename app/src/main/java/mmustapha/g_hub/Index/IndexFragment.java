@@ -103,6 +103,7 @@ public class IndexFragment extends Fragment implements IndexContract.View {
         }else{
             mDevelopers = savedInstanceState.getParcelableArrayList("DEVELOPER_ARRAY");
             mProgressBar.setVisibility(View.GONE);
+            System.out.println("It's not NEW");
         }
         mDevAdapter = new DevListAdapter(this, mDevelopers);
         // Create Recycler View
@@ -127,8 +128,10 @@ public class IndexFragment extends Fragment implements IndexContract.View {
     }
 
     @Override
-    public void onFailure() {
-
+    public void onFailure(String errorMessage) {
+        if (getView() != null){
+            Snackbar.make(getView(), errorMessage, Snackbar.LENGTH_SHORT).show();
+        }
     }
 
     @Override

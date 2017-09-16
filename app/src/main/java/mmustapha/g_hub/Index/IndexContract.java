@@ -14,7 +14,7 @@ public class IndexContract {
     interface View extends BaseView<Presenter>{
         Context getContext();
         void onSuccess(Developer dev);
-        void onFailure();
+        void onFailure(String errorMessage);
         void showToastMessage(String message);
     }
 

@@ -5,10 +5,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,8 +20,6 @@ import java.util.ArrayList;
 import mmustapha.g_hub.Index.Adapters.DevListAdapter;
 import mmustapha.g_hub.Index.Adapters.Developer;
 import mmustapha.g_hub.R;
-import mmustapha.g_hub.Utils.IPListener;
-import mmustapha.g_hub.Utils.InternetCheck;
 
 public class IndexFragment extends Fragment implements IndexContract.View {
 
@@ -30,6 +28,10 @@ public class IndexFragment extends Fragment implements IndexContract.View {
     private ArrayList<Developer> mDevelopers;
     private IndexContract.Presenter mPresenter;
     private ProgressBar mProgressBar;
+    private SwipeRefreshLayout mSwipeRefresh;
+
+    public final String REFRESH_LIST = "REFRESH_LIST";
+    public final String GET_LIST = "GET_LIST";
 
     public IndexFragment() {
         // Required empty public constructor
@@ -61,6 +63,9 @@ public class IndexFragment extends Fragment implements IndexContract.View {
         View view = inflater.inflate(R.layout.fragment_index, container, false);
         mRecyclerView = view.findViewById(R.id.dev_recyclerview);
         mProgressBar = view.findViewById(R.id.progressbar);
+        mSwipeRefresh = view.findViewById(R.id.swipeRefresh);
+        mSwipeRefresh.setColorSchemeResources(R.color.colorAccent,
+                R.color.colorPrimary, R.color.colorPrimaryDark);
         return view;
     }
 
@@ -72,18 +77,17 @@ public class IndexFragment extends Fragment implements IndexContract.View {
         final RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-
         mRecyclerView.setAdapter(adapter);
-        mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-            }
+    }
 
+    /**
+     * A SwipeRefreshLayout for getting updates on Developer's List
+     */
+    private void onSwipeRefresh(){
+        mSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-//                int position = mLayoutManager.getPosition(recyclerView);
-                super.onScrolled(recyclerView, dx, dy);
+            public void onRefresh() {
+                mPresenter.getServerResponse(REFRESH_LIST);
             }
         });
     }
@@ -106,8 +110,8 @@ public class IndexFragment extends Fragment implements IndexContract.View {
             System.out.println("It's not NEW");
         }
         mDevAdapter = new DevListAdapter(this, mDevelopers);
-        // Create Recycler View
         createRecyclerView(mDevAdapter);
+        onSwipeRefresh();
     }
 
     @Override
@@ -124,7 +128,7 @@ public class IndexFragment extends Fragment implements IndexContract.View {
         mDevelopers.add(dev);
         if (mDevAdapter != null)
         mDevAdapter.notifyDataSetChanged();
-        mProgressBar.setVisibility(View.GONE);
+        mProgressBar.setVisibility(View.GONE); // Hide Progress bar
     }
 
     @Override
@@ -137,5 +141,29 @@ public class IndexFragment extends Fragment implements IndexContract.View {
     @Override
     public void showToastMessage(String message) {
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void hideSwipeRefreshLayout() {
+        mSwipeRefresh.setRefreshing(false);
+    }
+
+    /**
+     * Stop Internet Check when paused
+     */
+    @Override
+    public void onPause() {
+        super.onPause();
+        mPresenter.stopServerResponse();
+        System.out.println("PAUSED!!!!!!!!!!");
+    }
+
+    /**
+     * Do a quick refresh of list
+     */
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.getServerResponse(REFRESH_LIST);
     }
 }

@@ -16,9 +16,12 @@ public class IndexContract {
         void onSuccess(Developer dev);
         void onFailure(String errorMessage);
         void showToastMessage(String message);
+        void hideSwipeRefreshLayout();
     }
 
     interface Presenter{
         void getDeveloperList();
+        void getServerResponse(String taskId);
+        void stopServerResponse();
     }
 }

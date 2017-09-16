@@ -23,6 +23,7 @@ public class IndexPresenter implements IndexContract.Presenter {
     private JSONObject mJSONObject;
     private Developer mDeveloper;
     private DBController mDBController;
+    private InternetCheck check;
 
     public IndexPresenter(IndexFragment view) {
         mView = view;
@@ -34,7 +35,7 @@ public class IndexPresenter implements IndexContract.Presenter {
      */
     @Override
     public void getDeveloperList() {
-        this.getServerResponse();
+        this.getServerResponse(mView.GET_LIST);
         int arrayLength = mDBController.fetchList().size();
         for (int i=0; i< arrayLength; i++){
             Developer dev = mDBController.fetchList().get(i);
@@ -59,10 +60,11 @@ public class IndexPresenter implements IndexContract.Presenter {
     /**
      * Get Response from API
      */
-    private void getServerResponse(){
+    @Override
+    public void getServerResponse(final String taskId){
         // Check for internet connectivity
         if (mView.getActivity() != null) {
-            new InternetCheck(mView.getContext(), new IPListener() {
+            check = new InternetCheck(mView.getContext(), new IPListener() {
                 @Override
                 public void getResponse(boolean isConnected) {
                     // If available, populate recycler view
@@ -85,6 +87,7 @@ public class IndexPresenter implements IndexContract.Presenter {
                                             mDeveloper.setIsFavourite(false);
                                             mView.onSuccess(mDeveloper);
                                         }
+                                        mView.hideSwipeRefreshLayout();
                                         populateLocalDB(userName, imageURL, String.valueOf(false));
                                     } catch (JSONException e) {
                                         e.printStackTrace();
@@ -95,11 +98,32 @@ public class IndexPresenter implements IndexContract.Presenter {
                     }
                     // Else re-run the internet check
                     else {
-                        mView.onFailure("No Internet Connectivity");
-                        getDeveloperList();
+                        switch (taskId){
+                            case "REFRESH_LIST":
+                                // Check for Internet once
+                                mView.hideSwipeRefreshLayout();
+                                mView.onFailure("No Internet Connectivity");
+                                break;
+                            case "GET_LIST":
+                                // Continuous Internet Check
+                                mView.onFailure("No Internet Connectivity");
+                                getServerResponse(mView.GET_LIST);
+                                break;
+                            case "STOP_GET":
+
+                            default:
+                                // Do Nothing
+                        }
                     }
                 }
-            }).execute();
+            });
+            check.execute();
         }
+    }
+
+    @Override
+    public void stopServerResponse() {
+        check.cancel(true);
+        System.out.println("CANCELLED!!!!!");
     }
 }

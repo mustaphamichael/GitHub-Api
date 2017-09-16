@@ -4,7 +4,7 @@ package mmustapha.g_hub.Profile.Adapter;
  * Created by mmustapha on 8/29/17.
  */
 
-public class DevProfile {
+public class DevProfile  {
 
     private String mFullName, mLocation, mUserName, mProfileURL, mImageURL, mRepo, mFollowers, mFollowing;
 

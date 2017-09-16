@@ -67,7 +67,7 @@ public class DevListAdapter extends RecyclerView.Adapter<DevListAdapter.DevListV
         final Developer Developer = mDeveloper.get(position);
         final String userName = Developer.getUserName(); // Retrieve Username from Developer
         String url = Developer.getImageURL();    // Retrieve the ImageURL from Developer
-        holder.username.setText(Developer.getUserName());
+        holder.username.setText(userName);
 
         // Load Developer's Image using Glide library
         RequestOptions options = new RequestOptions();
